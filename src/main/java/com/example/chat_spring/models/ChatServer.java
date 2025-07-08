@@ -21,18 +21,18 @@ public class ChatServer {
     private LocalDateTime creationDate;
     private LocalDateTime endDate;
     private Boolean isActive = true;
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chatId")
     private List<ChatMessage> messages = new ArrayList<>();
-    @OneToMany(mappedBy = "chatServer")
+    @ManyToMany(mappedBy = "chatServer")
     @JsonManagedReference
     private List<User> users = new ArrayList<>();
 
-    public ChatServer() {}
+    public ChatServer() {
+    }
 
     public String getId() {
         return id;
     }
-
 
 
     public void setId(String id) {
@@ -94,7 +94,6 @@ public class ChatServer {
     public void setName(String name) {
         this.name = name;
     }
-
 
 
 }

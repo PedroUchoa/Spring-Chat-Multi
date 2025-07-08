@@ -1,6 +1,7 @@
 package com.example.chat_spring.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,20 +18,23 @@ public class ChatMessage {
     private String content;
     @CreationTimestamp
     private LocalDateTime sendingTime;
-    private String senderId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonManagedReference
+    private User senderId;
     @ManyToOne
     @JoinColumn(name = "chat_server_id")
     @JsonBackReference
-    private ChatServer chat;
+    private ChatServer chatId;
 
     public ChatMessage() {}
 
-    public ChatMessage(String id, String content, String senderId, LocalDateTime sendingTime, ChatServer chat) {
+    public ChatMessage(String id, String content, User senderId, LocalDateTime sendingTime, ChatServer chatId) {
         this.id = id;
         this.content = content;
         this.senderId = senderId;
         this.sendingTime = sendingTime;
-        this.chat = chat;
+        this.chatId = chatId;
     }
 
     public String getId() {
@@ -41,19 +45,19 @@ public class ChatMessage {
         this.id = id;
     }
 
-    public ChatServer getChat() {
-        return chat;
+    public ChatServer getChatId() {
+        return chatId;
     }
 
-    public void setChat(ChatServer chat) {
-        this.chat = chat;
+    public void setChatId(ChatServer chatId) {
+        this.chatId = chatId;
     }
 
-    public String getSenderId() {
+    public User getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(String senderId) {
+    public void setSenderId(User senderId) {
         this.senderId = senderId;
     }
 

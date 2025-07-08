@@ -1,5 +1,6 @@
 package com.example.chat_spring.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,25 +18,31 @@ public class User {
     private String id;
     private String name;
     @CreationTimestamp
-    private LocalDateTime creationDate;
+    private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Boolean isActive = true;
+
     @ManyToMany
     @JoinTable(
             name = "user_chat",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_message_id"))
+            inverseJoinColumns = @JoinColumn(name = "chat_server_id"))
     private List<ChatServer> chatServer = new ArrayList<>();
+
+    @OneToMany(mappedBy = "senderId")
+    @JsonBackReference
+    private List<ChatMessage> chatMessages = new ArrayList<>();
 
     public User() {}
 
-    public User(List<ChatServer> chatServer, LocalDateTime endDate, Boolean isActive, LocalDateTime creationDate, String name, String id) {
+    public User(List<ChatServer> chatServer, LocalDateTime endDate, Boolean isActive, LocalDateTime startDate, String name, String id, List<ChatMessage> chatMessage) {
         this.chatServer = chatServer;
         this.endDate = endDate;
         this.isActive = isActive;
-        this.creationDate = creationDate;
+        this.startDate = startDate;
         this.name = name;
         this.id = id;
+        this.chatMessages = chatMessage;
     }
 
     public String getId() {
@@ -54,12 +61,12 @@ public class User {
         this.name = name;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
     public LocalDateTime getEndDate() {
@@ -84,6 +91,14 @@ public class User {
 
     public void setChatServer(List<ChatServer> chatServer) {
         this.chatServer = chatServer;
+    }
+
+    public List<ChatMessage> getChatMessages() {
+        return chatMessages;
+    }
+
+    public void setChatMessages(List<ChatMessage> chatMessages) {
+        this.chatMessages = chatMessages;
     }
 
     @Override
