@@ -1,0 +1,7 @@
+CREATE TABLE user(
+    id VARCHAR(255) NOT NULL PRIMARY KEY UNIQUE,
+    name VARCHAR(255) NOT NULL,
+    start_date DATETIME NOT NULL,
+    end_date DATETIME,
+    is_active BOOLEAN NOT NULL
+)
