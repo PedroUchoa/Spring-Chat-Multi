@@ -1,5 +1,6 @@
 package com.example.chat_spring.models;
 
+import com.example.chat_spring.dto.chatMessageDtos.CreateMessageDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private Long id;
     private String content;
     @CreationTimestamp
     private LocalDateTime sendingTime;
@@ -29,7 +30,7 @@ public class ChatMessage {
 
     public ChatMessage() {}
 
-    public ChatMessage(String id, String content, User senderId, LocalDateTime sendingTime, ChatServer chatId) {
+    public ChatMessage(Long id, String content, User senderId, LocalDateTime sendingTime, ChatServer chatId) {
         this.id = id;
         this.content = content;
         this.senderId = senderId;
@@ -37,11 +38,18 @@ public class ChatMessage {
         this.chatId = chatId;
     }
 
-    public String getId() {
+    public ChatMessage(String content, User user, ChatServer chatServer) {
+        this.content = content;
+        this.senderId = user;
+        this.chatId = chatServer;
+    }
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

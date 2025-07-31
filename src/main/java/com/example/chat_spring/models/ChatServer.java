@@ -1,5 +1,7 @@
 package com.example.chat_spring.models;
 
+import com.example.chat_spring.dto.chatServerDtos.CreateChatServerDto;
+import com.example.chat_spring.dto.chatServerDtos.UpdateChatServerDto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,28 +16,36 @@ public class ChatServer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private Long id;
     private String name;
     private String image;
     @CreationTimestamp
     private LocalDateTime creationDate;
     private LocalDateTime endDate;
-    private Boolean isActive = true;
+    private Boolean isActive;
     @OneToMany(mappedBy = "chatId")
-    private List<ChatMessage> messages = new ArrayList<>();
+    private List<ChatMessage> messages;
     @ManyToMany(mappedBy = "chatServer")
     @JsonManagedReference
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
     public ChatServer() {
     }
 
-    public String getId() {
+    public ChatServer(CreateChatServerDto createChatServer) {
+        this.name = createChatServer.name();
+        this.image = createChatServer.image();
+        this.isActive = true;
+        this.messages = new ArrayList<>();
+        this.users = new ArrayList<>();
+    }
+
+    public Long getId() {
         return id;
     }
 
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -96,4 +106,13 @@ public class ChatServer {
     }
 
 
+    public void update(UpdateChatServerDto updateChatServer) {
+        this.name = updateChatServer.name();
+        this.image = updateChatServer.image();
+    }
+
+    public void delete() {
+        this.isActive = false;
+        this.endDate = LocalDateTime.now();
+    }
 }

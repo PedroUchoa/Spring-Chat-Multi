@@ -1,5 +1,6 @@
 package com.example.chat_spring.models;
 
+import com.example.chat_spring.dto.UserDtos.CreateUserDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,13 +16,12 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private Long id;
     private String name;
     @CreationTimestamp
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Boolean isActive = true;
-
+    private Boolean isActive;
     @ManyToMany
     @JoinTable(
             name = "user_chat",
@@ -35,7 +35,7 @@ public class User {
 
     public User() {}
 
-    public User(List<ChatServer> chatServer, LocalDateTime endDate, Boolean isActive, LocalDateTime startDate, String name, String id, List<ChatMessage> chatMessage) {
+    public User(List<ChatServer> chatServer, LocalDateTime endDate, Boolean isActive, LocalDateTime startDate, String name, Long id, List<ChatMessage> chatMessage) {
         this.chatServer = chatServer;
         this.endDate = endDate;
         this.isActive = isActive;
@@ -45,11 +45,16 @@ public class User {
         this.chatMessages = chatMessage;
     }
 
-    public String getId() {
+    public User(CreateUserDto userDto) {
+        this.name = userDto.name();
+        this.isActive = true;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -118,4 +123,7 @@ public class User {
         setEndDate(LocalDateTime.now());
     }
 
+    public void update(CreateUserDto updateUser) {
+        this.name = name;
+    }
 }
