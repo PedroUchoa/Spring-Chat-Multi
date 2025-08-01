@@ -11,6 +11,8 @@ import com.example.chat_spring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ChatMessageService {
 
@@ -31,9 +33,9 @@ public class ChatMessageService {
         return new ReturnMessageDto(chatMessage);
     }
 
-    public ReturnMessageDto getMessageById(Long id){
-        ChatMessage chatMessage = chatMessageRepository.getReferenceById(id);
-        return new ReturnMessageDto(chatMessage);
+    public List<ReturnMessageDto> getAllMessagesByChatRoomId(Long id){
+        return chatMessageRepository.getAllMessagesByChatRoomId(id).stream().map(ReturnMessageDto::new).toList();
+
     }
 
 
