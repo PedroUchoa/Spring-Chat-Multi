@@ -15,7 +15,7 @@ public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
     private String content;
     @CreationTimestamp
     private LocalDateTime sendingTime;
@@ -30,7 +30,7 @@ public class ChatMessage {
 
     public ChatMessage() {}
 
-    public ChatMessage(Long id, String content, User senderId, LocalDateTime sendingTime, ChatServer chatId) {
+    public ChatMessage(String id, String content, User senderId, LocalDateTime sendingTime, ChatServer chatId) {
         this.id = id;
         this.content = content;
         this.senderId = senderId;
@@ -45,11 +45,11 @@ public class ChatMessage {
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

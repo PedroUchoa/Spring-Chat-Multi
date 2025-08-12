@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Arrays;
 
-public interface ChatServerRepository extends JpaRepository<ChatServer,Long> {
+public interface ChatServerRepository extends JpaRepository<ChatServer,String> {
     Page<ChatServer> findAllByIsActiveTrue(Pageable pageable);
 }

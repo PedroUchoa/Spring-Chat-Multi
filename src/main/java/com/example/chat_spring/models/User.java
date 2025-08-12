@@ -16,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
     private String name;
     @CreationTimestamp
     private LocalDateTime startDate;
@@ -35,7 +35,7 @@ public class User {
 
     public User() {}
 
-    public User(List<ChatServer> chatServer, LocalDateTime endDate, Boolean isActive, LocalDateTime startDate, String name, Long id, List<ChatMessage> chatMessage) {
+    public User(List<ChatServer> chatServer, LocalDateTime endDate, Boolean isActive, LocalDateTime startDate, String name, String id, List<ChatMessage> chatMessage) {
         this.chatServer = chatServer;
         this.endDate = endDate;
         this.isActive = isActive;
@@ -50,11 +50,11 @@ public class User {
         this.isActive = true;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

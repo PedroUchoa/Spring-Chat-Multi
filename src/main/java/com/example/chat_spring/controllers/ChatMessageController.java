@@ -33,7 +33,7 @@ public class ChatMessageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<ReturnMessageDto>> getAllMessagesByChatRoomId(@PathVariable Long chatRoomId){
+    public ResponseEntity<List<ReturnMessageDto>> getAllMessagesByChatRoomId(@PathVariable String chatRoomId){
         List<ReturnMessageDto> returnMessages = chatMessageService.getAllMessagesByChatRoomId(chatRoomId);
         return ResponseEntity.ok(returnMessages);
     }

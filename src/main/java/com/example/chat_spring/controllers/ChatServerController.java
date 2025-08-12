@@ -34,7 +34,7 @@ public class ChatServerController {
 
     @PostMapping("/{id}/add/{userId}")
     @Transactional
-    public ResponseEntity<ReturnChatServerDto> addUserToChat(@PathVariable Long id, @PathVariable Long userId){
+    public ResponseEntity<ReturnChatServerDto> addUserToChat(@PathVariable String id, @PathVariable String userId){
         ReturnChatServerDto returnChatServerDto = chatServerService.addUserToChat(id,userId);
         return ResponseEntity.ok(returnChatServerDto);
 
@@ -47,28 +47,28 @@ public class ChatServerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReturnChatServerDto> getChatServerById(@PathVariable Long id){
+    public ResponseEntity<ReturnChatServerDto> getChatServerById(@PathVariable String id){
         ReturnChatServerDto chatServerDto = chatServerService.getChatServerById(id);
         return ResponseEntity.ok(chatServerDto);
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<ReturnChatServerDto> updateChatServer(@PathVariable Long id, @RequestBody UpdateChatServerDto updateChatServerDto){
+    public ResponseEntity<ReturnChatServerDto> updateChatServer(@PathVariable String id, @RequestBody UpdateChatServerDto updateChatServerDto){
         ReturnChatServerDto returnChatServer = chatServerService.updateChatServer(id,updateChatServerDto);
         return ResponseEntity.ok(returnChatServer);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> deleteChatServer(@PathVariable Long id){
+    public ResponseEntity<Void> deleteChatServer(@PathVariable String id){
         chatServerService.deleteChatServer(id);
         return  ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}/remove/{userId}")
     @Transactional
-    public ResponseEntity<Void> removeUserFromChat(@PathVariable Long id, @PathVariable Long userId){
+    public ResponseEntity<Void> removeUserFromChat(@PathVariable String id, @PathVariable String userId){
         chatServerService.removeUserFromChat(id,userId);
         return ResponseEntity.noContent().build();
     }

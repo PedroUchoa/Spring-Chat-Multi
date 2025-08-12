@@ -30,25 +30,25 @@ public class ChatServerService {
         return chatServerRepository.findAllByIsActiveTrue(pageable).map(ReturnChatServerDto::new);
     }
 
-    public ReturnChatServerDto getChatServerById(Long id){
+    public ReturnChatServerDto getChatServerById(String id){
         ChatServer chatServer = chatServerRepository.getReferenceById(id);
         return new ReturnChatServerDto(chatServer);
     }
 
-    public ReturnChatServerDto updateChatServer(Long id, UpdateChatServerDto updateChatServer){
+    public ReturnChatServerDto updateChatServer(String id, UpdateChatServerDto updateChatServer){
         ChatServer chatServer = chatServerRepository.getReferenceById(id);
         chatServer.update(updateChatServer);
         chatServerRepository.save(chatServer);
         return new ReturnChatServerDto(chatServer);
     }
 
-    public void deleteChatServer(Long id){
+    public void deleteChatServer(String id){
         ChatServer chatServer = chatServerRepository.getReferenceById(id);
         chatServer.delete();
         chatServerRepository.save(chatServer);
     }
 
-    public ReturnChatServerDto addUserToChat(Long chatId, Long userId){
+    public ReturnChatServerDto addUserToChat(String chatId, String userId){
         User user = userRepository.getReferenceById(userId);
         ChatServer chatServer = chatServerRepository.getReferenceById(chatId);
 
@@ -57,7 +57,7 @@ public class ChatServerService {
         return new ReturnChatServerDto(chatServer);
 
     }
-    public ReturnChatServerDto removeUserFromChat(Long chatId, Long userId){
+    public ReturnChatServerDto removeUserFromChat(String chatId, String userId){
         User user = userRepository.getReferenceById(userId);
         ChatServer chatServer = chatServerRepository.getReferenceById(chatId);
 

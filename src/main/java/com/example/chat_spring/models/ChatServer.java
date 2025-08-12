@@ -16,7 +16,7 @@ public class ChatServer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
     private String name;
     private String image;
     @CreationTimestamp
@@ -40,12 +40,12 @@ public class ChatServer {
         this.users = new ArrayList<>();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -33,8 +33,8 @@ public class ChatMessageService {
         return new ReturnMessageDto(chatMessage);
     }
 
-    public List<ReturnMessageDto> getAllMessagesByChatRoomId(Long id){
-        return chatMessageRepository.getAllMessagesByChatRoomId(id).stream().map(ReturnMessageDto::new).toList();
+    public List<ReturnMessageDto> getAllMessagesByChatRoomId(String id){
+        return chatMessageRepository.getAllMessagesByChatIdId(id).stream().map(ReturnMessageDto::new).toList();
 
     }
 

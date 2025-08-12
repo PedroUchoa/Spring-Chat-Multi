@@ -5,7 +5,7 @@ import com.example.chat_spring.models.User;
 
 import java.time.LocalDateTime;
 
-public record ReturnMessageDto(Long id, String content, LocalDateTime sendingTime, User sender, Long chatId) {
+public record ReturnMessageDto(String id, String content, LocalDateTime sendingTime, User sender, String chatId) {
 
     public ReturnMessageDto(ChatMessage chatMessage) {
         this(chatMessage.getId(), chatMessage.getContent(), chatMessage.getSendingTime(), chatMessage.getSenderId(),chatMessage.getChatId().getId());

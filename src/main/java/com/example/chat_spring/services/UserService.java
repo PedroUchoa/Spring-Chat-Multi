@@ -25,19 +25,19 @@ public class UserService {
         return userRepository.getAllUsersByIsActiveTrue(pageable).map(ReturnUserDto::new);
     }
 
-    public ReturnUserDto getUserById(Long id){
+    public ReturnUserDto getUserById(String id){
         User user = userRepository.getReferenceById(id);
         return new ReturnUserDto(user);
     }
 
-    public ReturnUserDto updateUser(CreateUserDto updateUser, Long id){
+    public ReturnUserDto updateUser(CreateUserDto updateUser, String id){
         User user = userRepository.getReferenceById(id);
         user.update(updateUser);
         userRepository.save(user);
         return new ReturnUserDto(user);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(String id){
         User user = userRepository.getReferenceById(id);
         user.disableAnUser();
         userRepository.save(user);
