@@ -2,6 +2,8 @@ package com.example.chat_spring.models;
 
 import com.example.chat_spring.dto.chatServerDtos.CreateChatServerDto;
 import com.example.chat_spring.dto.chatServerDtos.UpdateChatServerDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,13 +22,14 @@ public class ChatServer {
     private String name;
     private String image;
     @CreationTimestamp
-    private LocalDateTime creationDate;
+    private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Boolean isActive;
-    @OneToMany(mappedBy = "chatId")
-    private List<ChatMessage> messages;
-    @ManyToMany(mappedBy = "chatServer")
+    @OneToMany(mappedBy = "chatId",fetch = FetchType.EAGER)
     @JsonManagedReference
+    private List<ChatMessage> messages;
+    @ManyToMany(mappedBy = "chatServer",fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("chatServer")
     private List<User> users;
 
     public ChatServer() {
@@ -39,6 +42,8 @@ public class ChatServer {
         this.messages = new ArrayList<>();
         this.users = new ArrayList<>();
     }
+
+
 
     public String getId() {
         return id;
@@ -81,12 +86,12 @@ public class ChatServer {
         this.endDate = endDate;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
     public String getImage() {

@@ -19,12 +19,12 @@ public class ChatMessage {
     private String content;
     @CreationTimestamp
     private LocalDateTime sendingTime;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "senderId")
+    @JsonBackReference
     private User senderId;
-    @ManyToOne
-    @JoinColumn(name = "chat_server_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "chatId")
     @JsonBackReference
     private ChatServer chatId;
 

@@ -2,6 +2,8 @@ package com.example.chat_spring.models;
 
 import com.example.chat_spring.dto.UserDtos.CreateUserDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,14 +24,15 @@ public class User {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Boolean isActive;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_chat",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_server_id"))
+    @JsonIgnoreProperties("users")
     private List<ChatServer> chatServer = new ArrayList<>();
 
-    @OneToMany(mappedBy = "senderId")
+    @OneToMany(mappedBy = "senderId",fetch = FetchType.EAGER)
     @JsonBackReference
     private List<ChatMessage> chatMessages = new ArrayList<>();
 

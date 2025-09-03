@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public Page<ReturnUserDto> getAllUsers(Pageable pageable){
-        return userRepository.getAllUsersByIsActiveTrue(pageable).map(ReturnUserDto::new);
+        return userRepository.findAllByIsActiveTrue(pageable).map(ReturnUserDto::new);
     }
 
     public ReturnUserDto getUserById(String id){

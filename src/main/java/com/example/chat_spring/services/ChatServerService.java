@@ -22,7 +22,12 @@ public class ChatServerService {
     private UserRepository userRepository;
 
     public ReturnChatServerDto createChatServer(CreateChatServerDto createChatServer){
-        ChatServer chatServer = chatServerRepository.save(new ChatServer(createChatServer));
+        User user = userRepository.getReferenceById(createChatServer.idUser());
+        ChatServer chatServer = new ChatServer(createChatServer);
+        chatServer.getUsers().add(user);
+        user.getChatServer().add(chatServer);
+        chatServerRepository.save(chatServer);
+        userRepository.save(user);
         return new ReturnChatServerDto(chatServer);
     }
 
@@ -53,6 +58,8 @@ public class ChatServerService {
         ChatServer chatServer = chatServerRepository.getReferenceById(chatId);
 
         chatServer.getUsers().add(user);
+        user.getChatServer().add(chatServer);
+        userRepository.save(user);
         chatServerRepository.save(chatServer);
         return new ReturnChatServerDto(chatServer);
 
