@@ -1,6 +1,9 @@
 CREATE TABLE user(
     id VARCHAR(255) NOT NULL PRIMARY KEY UNIQUE,
     name VARCHAR(255) NOT NULL,
+    login VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role TEXT NOT NULL,
     start_date DATETIME NOT NULL,
     end_date DATETIME,
     is_active BOOLEAN NOT NULL

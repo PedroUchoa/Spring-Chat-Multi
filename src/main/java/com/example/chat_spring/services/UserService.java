@@ -2,11 +2,14 @@ package com.example.chat_spring.services;
 
 import com.example.chat_spring.dto.UserDtos.CreateUserDto;
 import com.example.chat_spring.dto.UserDtos.ReturnUserDto;
+import com.example.chat_spring.enums.Role;
 import com.example.chat_spring.models.User;
 import com.example.chat_spring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -17,8 +20,9 @@ public class UserService {
     private UserRepository userRepository;
 
     public ReturnUserDto createUser(CreateUserDto userDto){
-        User user = userRepository.save(new User(userDto));
-        return new ReturnUserDto(user);
+        String encryptedPassword = new BCryptPasswordEncoder().encode(userDto.password());
+        User user = new User(userDto.login(),userDto.name(),encryptedPassword, Role.USER);
+        return new ReturnUserDto(userRepository.save(user));
     }
 
     public Page<ReturnUserDto> getAllUsers(Pageable pageable){

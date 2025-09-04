@@ -1,25 +1,33 @@
 package com.example.chat_spring.models;
 
 import com.example.chat_spring.dto.UserDtos.CreateUserDto;
+import com.example.chat_spring.enums.Role;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Table(name="user")
 @Entity(name = "User")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
+    private String login;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @CreationTimestamp
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -38,18 +46,11 @@ public class User {
 
     public User() {}
 
-    public User(List<ChatServer> chatServer, LocalDateTime endDate, Boolean isActive, LocalDateTime startDate, String name, String id, List<ChatMessage> chatMessage) {
-        this.chatServer = chatServer;
-        this.endDate = endDate;
-        this.isActive = isActive;
-        this.startDate = startDate;
+    public User(String login, String name, String encryptedPassword, Role role) {
+        this.login = login;
         this.name = name;
-        this.id = id;
-        this.chatMessages = chatMessage;
-    }
-
-    public User(CreateUserDto userDto) {
-        this.name = userDto.name();
+        this.password = encryptedPassword;
+        this.role = role;
         this.isActive = true;
     }
 
@@ -109,6 +110,26 @@ public class User {
         this.chatMessages = chatMessages;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -128,5 +149,41 @@ public class User {
 
     public void update(CreateUserDto updateUser) {
         this.name = name;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(role == Role.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

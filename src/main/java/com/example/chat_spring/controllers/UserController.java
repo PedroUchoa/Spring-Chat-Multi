@@ -33,8 +33,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Page<ReturnUserDto>> getAllUsers(@PageableDefault(sort = {"id"})Pageable pageable){
-        Page<ReturnUserDto> user = userService.getAllUsers(pageable);
-        return ResponseEntity.ok(user);
+        Page<ReturnUserDto> users = userService.getAllUsers(pageable);
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
