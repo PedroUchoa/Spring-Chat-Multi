@@ -9,4 +9,6 @@ import java.util.Arrays;
 
 public interface ChatServerRepository extends JpaRepository<ChatServer,String> {
     Page<ChatServer> findAllByIsActiveTrue(Pageable pageable);
+
+    ChatServer findByNameAndIsActiveTrue(String name);
 }

@@ -34,7 +34,7 @@ public class ChatMessage {
         this.id = id;
         this.content = content;
         this.senderId = senderId;
-        this.sendingTime = sendingTime;
+        this.sendingTime = LocalDateTime.now();
         this.chatId = chatId;
     }
 
@@ -42,6 +42,7 @@ public class ChatMessage {
         this.content = content;
         this.senderId = user;
         this.chatId = chatServer;
+        this.sendingTime = LocalDateTime.now();
     }
 
 

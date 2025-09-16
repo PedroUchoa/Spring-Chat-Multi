@@ -1,5 +1,6 @@
 package com.example.chat_spring.services;
 
+import com.example.chat_spring.infra.exceptions.LoginNotFoundException;
 import com.example.chat_spring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,6 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return userRepository.findByLogin(login).get();
+        return userRepository.findByLogin(login).orElseThrow(()-> new LoginNotFoundException(login));
     }
 }

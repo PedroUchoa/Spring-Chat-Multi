@@ -26,20 +26,22 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable)
+                .cors(cors->{})
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req ->{
                     req.requestMatchers(HttpMethod.POST, "/auth/login","/api/users").permitAll();
+                    req.requestMatchers("/ws/**").permitAll();
                     req.anyRequest().authenticated();
                 }).addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder encoder(){
+    public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 

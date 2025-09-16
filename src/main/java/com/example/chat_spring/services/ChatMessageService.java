@@ -33,7 +33,8 @@ public class ChatMessageService {
     public MinMessageDto createMessage(CreateMessageDto createMessageDto, String serverId){
         User user = userRepository.getReferenceById(createMessageDto.senderId());
         ChatServer chatServer = chatServerRepository.getReferenceById(serverId);
-        ChatMessage chatMessage = chatMessageRepository.save(new ChatMessage(createMessageDto.content(),user,chatServer));
+        ChatMessage chatMessage = new ChatMessage(createMessageDto.content(),user,chatServer);
+        chatMessageRepository.save(chatMessage);
         return new MinMessageDto(chatMessage.getId(),chatMessage.getContent(),chatMessage.getSendingTime(),user.getId(),user.getName());
     }
 

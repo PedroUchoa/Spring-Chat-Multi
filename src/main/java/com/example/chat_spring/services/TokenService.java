@@ -25,7 +25,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("Chat Multi")
                     .withSubject(user.getLogin())
-                    .withClaim("id", Collections.singletonList(user.getId()))
+                    .withClaim("id", user.getId())
                     .withExpiresAt(expireTimer())
                     .sign(algorithm);
         }catch (JWTCreationException exception){

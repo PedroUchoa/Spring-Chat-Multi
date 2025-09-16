@@ -43,6 +43,13 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/token")
+    public ResponseEntity<ReturnUserDto> getUserByTokenJWT( @RequestHeader (name="Authorization") String token){
+        System.out.println(token);
+        ReturnUserDto returnUserDto = userService.getUserByTokenJWT(token.replace("Bearer ",""));
+        return ResponseEntity.ok(returnUserDto);
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ReturnUserDto> updateUser(@RequestBody CreateUserDto createUserDto, @PathVariable String id){
