@@ -20,7 +20,7 @@ Passo a passo que mostram como colocar o ambiente de desenvolvimento em funciona
 - Abra seu terminal ou prompt de comando e clone o projeto com o seguinte comando:
 
 ```
-git clone [URL_DO_SEU_REPOSITORIO]
+git clone https://github.com/PedroUchoa/Spring-Chat-Multi.git
 ```
 
 #### 2- Configurar o Banco de Dados
@@ -30,7 +30,7 @@ git clone [URL_DO_SEU_REPOSITORIO]
 - Acesse o arquivo src/main/resources/application.properties (ou application.yml) e atualize as configurações de conexão com suas credenciais do MySQL:
 
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/nome_do_seu_banco
+spring.datasource.url=jdbc:mysql://localhost/nome_do_seu_banco
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 ```
